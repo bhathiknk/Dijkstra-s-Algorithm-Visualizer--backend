@@ -4,20 +4,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * Web configuration class to enable Cross-Origin Resource Sharing (CORS).
- * This allows the React frontend (running on a different port/origin)
- * to make requests to this Spring Boot backend.
- */
+//Web configuration to enable Cross-Origin Resource Sharing (CORS).Allows the React frontend (localhost:3000) to communicate with this backend.
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**") // Apply CORS to all endpoints under /api
-                .allowedOrigins("http://localhost:3000") // Allow requests from your React app's development server
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allow common HTTP methods
-                .allowedHeaders("*") // Allow all headers
-                .allowCredentials(true); // Allow sending cookies/auth headers (if applicable)
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://localhost:3000") // Frontend origin
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 }

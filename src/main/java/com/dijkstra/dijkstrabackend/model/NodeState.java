@@ -1,13 +1,12 @@
 package com.dijkstra.dijkstrabackend.model;
 
-/**
- * Enum representing the state or type of a grid cell.
- */
+//Enum representing the various states a grid cell can have during pathfinding.
+
 public enum NodeState {
-    EMPTY,      // Default traversable cell
-    OBSTACLE,   // Impassable cell
-    START,      // Starting point of the path
-    END,        // Ending point of the path
-    VISITED,    // Cell visited during algorithm execution
-    PATH        // Cell part of the final shortest path
+    EMPTY,
+    OBSTACLE,
+    START,
+    END,
+    VISITED,
+    PATH
 }

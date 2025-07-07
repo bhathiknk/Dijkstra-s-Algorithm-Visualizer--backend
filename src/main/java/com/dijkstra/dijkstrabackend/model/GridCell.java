@@ -4,46 +4,38 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Represents a single cell/node in the grid for pathfinding.
- * It holds its coordinates, type, and properties used by Dijkstra's algorithm.
- */
-@Data // Lombok annotation to generate getters, setters, equals, hashCode, and toString
-@NoArgsConstructor // Lombok annotation to generate a no-argument constructor
-@AllArgsConstructor // Lombok annotation to generate a constructor with all arguments
+//Represents a single cell/node in the grid for pathfinding.Includes coordinates, type, and Dijkstra's algorithm specific properties.
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class GridCell implements Comparable<GridCell> {
     private int row;
     private int col;
-    private NodeState type; // e.g., EMPTY, OBSTACLE, START, END, VISITED, PATH
+    private NodeState type;
 
-    // Dijkstra's algorithm specific properties
-    private double distance = Double.POSITIVE_INFINITY; // Distance from the start node
-    private boolean isVisited = false; // Whether this node has been processed
-    private GridCell previousNode = null; // To reconstruct the shortest path
+    // Properties specific to Dijkstra's algorithm calculations
+    private double distance = Double.POSITIVE_INFINITY; // Current shortest distance from start
+    private boolean isVisited = false; // Whether this node has been finalized/processed
+    private GridCell previousNode = null; // The predecessor node on the shortest path from start
 
-    /**
-     * Constructor used when receiving data from the frontend.
-     * The frontend only sends row, col, and type.
-     */
+
+    //Constructor for creating a GridCell when receiving basic data from the frontend.Dijkstra-specific fields will be initialized to defaults.
     public GridCell(int row, int col, NodeState type) {
         this.row = row;
         this.col = col;
         this.type = type;
     }
 
-    /**
-     * Compares GridCell objects based on their distance for use in a PriorityQueue.
-     * Nodes with smaller distances have higher priority.
-     */
+    //Compares GridCell objects based on their distance.Essential for PriorityQueue to prioritize nodes with shorter distances.
+
     @Override
     public int compareTo(GridCell other) {
         return Double.compare(this.distance, other.distance);
     }
 
-    /**
-     * Custom equals and hashCode for proper comparison in data structures like HashMap/HashSet
-     * based on their coordinates, not their Dijkstra-specific properties.
-     */
+    //Defines equality based solely on row and column, ignoring Dijkstra-specific properties.Important for correct comparisons in data structures.
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,9 +44,10 @@ public class GridCell implements Comparable<GridCell> {
         return row == gridCell.row && col == gridCell.col;
     }
 
+    //Generates a hash code based solely on row and column.Consistent with `equals` method, crucial for proper functioning in hash-based collections.
+
     @Override
     public int hashCode() {
-        // Simple hash based on row and col
         return 31 * row + col;
     }
 }
